@@ -4,10 +4,13 @@ main =
   Html.text response
 
 response =
-  toString values
+  toString (List.sum even)
+
+even =
+  List.filter (\v -> v % 2 == 0) values
 
 values =
-  List.filter (\v -> v < 4000000) (fibs 30)
+  List.filter (\v -> v < 4000000) (fibs 33)
 
 fibs : Int -> List Int
 fibs index =
@@ -32,5 +35,5 @@ fibs index =
         current =
           a + b
       in
-        current :: (fibs (index - 1))
+        current :: previous
 

@@ -1,2 +1,3 @@
 run:
-	nim c -r main.nim
+	nimble run main
+	# nim c -r main.nim

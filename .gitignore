@@ -2,3 +2,5 @@ elm-stuff
 elm.js
 target/
 main
+_build
+.merlin

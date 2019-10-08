@@ -1,12 +1,5 @@
 open Printf
 
-let rec range l a b =
-  if a = b then
-  	l @ [b]
-  else
-  	range (l @ [a]) (a + 1) b
-
-
 let rec rest_of_sequence n =
 	let next =
 		if n mod 2 == 0 then
@@ -21,26 +14,30 @@ let rec rest_of_sequence n =
 let sequence n =
 	n :: rest_of_sequence n
 
-let rec build_sequences n =
-	match n with
-	| 1 -> []
-	| _ ->
-		sequence n :: build_sequences (n - 1)
+type longest_chain =
+	{n: int; size: int;}
 
-(* 
-let print_sequence n =
-	(sequence n) *)
-
-let pick_max (previous_ix, previous_count) (ix, count) =
-	if count > previous_count then
-		(ix, count)
+let rec go (n: int) (longest_chain: longest_chain) =
+	if n == 1 then
+		longest_chain
 	else
-		(previous_ix, previous_count)
+		let seq =
+			sequence n
+
+		in
+		let seq_size =
+			List.length seq
+
+		in
+		let next_longest_chain =
+			if seq_size > longest_chain.size then
+				{ n = n ; size = seq_size }
+			else
+				longest_chain
+		in
+		go (n - 1) next_longest_chain
+
 
 let () =
-	(* build_sequences 1_000_000 *)
-	range [] 1 1_000_000
-		|> List.map sequence
-		|> List.mapi (fun ix l -> (ix + 1, List.length l))
-		|> List.fold_left pick_max (0, 0)
-		|> fun (ix, count) -> (printf "%d %d") ix count
+	go 1_000_000 { n = 0; size = 0 }
+		|> fun {n;size} -> (printf "%d %d") n size

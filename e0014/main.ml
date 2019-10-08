@@ -1,10 +1,11 @@
 open Printf
 
-let rec range_rec l a b =
+let rec range l a b =
   if a = b then
   	l @ [b]
   else
-  	range_rec (l @ [a]) (a + 1) b
+  	range (l @ [a]) (a + 1) b
+
 
 let rec rest_of_sequence n =
 	let next =
@@ -37,7 +38,9 @@ let pick_max (previous_ix, previous_count) (ix, count) =
 		(previous_ix, previous_count)
 
 let () =
-	build_sequences 1_000_000
+	(* build_sequences 1_000_000 *)
+	range [] 1 1_000_000
+		|> List.map sequence
 		|> List.mapi (fun ix l -> (ix + 1, List.length l))
 		|> List.fold_left pick_max (0, 0)
 		|> fun (ix, count) -> (printf "%d %d") ix count

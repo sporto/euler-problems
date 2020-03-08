@@ -7,19 +7,10 @@ open Core
 type matrix =
 	int list list
 
-type tree =
-	| Leaf
-	| Node of node
-and node = {
-  	value: int;
-  	left: tree;
-  	right: tree;
-	}
-
 type coor = int * int
 
 let file_name =
-	"input_1.txt"
+	"input_2.txt"
 
 let read_file () : string list =
 	file_name
@@ -40,42 +31,32 @@ let parse_file (): matrix =
 let print_list list =
 	List.iter ~f: (printf "%d ") list
 
-let left_from (x , y) =
-	(x, y + 1)
+let reduce_row (row: int list) (row_for_max: int list) : int list =
+	let
+		reducer ix row_value =
+			let left =
+				List.nth row_for_max ix
+					|> Option.value ~default: 0
+			in
+			let right =
+				List.nth row_for_max (ix + 1)
+					|> Option.value ~default: 0
+			in
+			row_value + max left right
+	in
+	row
+		|> List.mapi ~f: reducer
 
-let right_from (x, y) =
-	(x + 1, y  + 1)
-
-let get (matrix: matrix) ((x , y) : coor) : int option =
-	match List.nth matrix y with
-		| None ->
-			None
-		| Some row ->
-			List.nth row x
-(* 
-let get_left (matrix: matrix) coor : int option =
-	get matrix (left_from coor)
-
-let get_right (matrix: matrix) coor : int option =
-	get matrix (right_from coor) *)
-
-let rec make_tree (matrix : matrix) (coor : coor): tree =
-	match get matrix coor with
-		| Some v ->
-			Node {
-					value = v;
-					left = make_tree matrix (left_from coor);
-					right = make_tree matrix (right_from coor);
-				}
-		| None ->
-			Leaf
-
-let print_tree (tree: tree) =
-	match tree with
-	| Leaf ->
-		()
-	| Node {value; _;} ->
-		printf "%d" value
+let rec walk matrix =
+	match matrix with
+	| [] ->
+		0
+	| row :: [] ->
+		List.hd row
+			|> Option.value ~default: 0
+	| row_for_max :: row :: rest  ->
+		reduce_row row row_for_max :: rest
+			|> walk
 
 let () =
 	let
@@ -83,11 +64,10 @@ let () =
 			parse_file ()
 	in
 	let
-		tree =
-			make_tree matrix (0,0)
+		result =
+			matrix
+				|> List.rev
+				|> walk
 	in
-	tree
-		|> print_tree
-	(* matrix
-		|> List.iter ~f: print_list *)
+	printf "%d " result
 

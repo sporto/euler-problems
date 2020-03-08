@@ -21,7 +21,7 @@ e.g. 1 3 3 1 -> 4 6 4 -> 10 10 -> 20
 let reduce l =
 	List.map2
 		(+)
-		(l |> List.rev |> List.tl |> List.rev) 
+		(l |> List.rev |> List.tl |> List.rev)
 		(List.tl l)
 
 let rec reduce_until_one l =

@@ -10,12 +10,17 @@ pub fn is_leap_year_test() {
 
   app.is_leap_year(2000)
     |> expect.equal(_, True)
-  
+
   app.is_leap_year(1900)
     |> expect.equal(_, False)
 }
 
-pub fn hello_world_test() {
-  app.hello_world()
-  |> expect.equal(_, "Hello, from app!")
+pub fn date_test() {
+  app.dates()
+    |> expect.equal(_, [])
+}
+
+pub fn result_test() {
+  app.response()
+    |> expect.equal(_, 171)
 }

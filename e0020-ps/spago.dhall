@@ -4,7 +4,14 @@ You can edit this file as you like.
 -}
 { name = "my-project"
 , backend = "psgo"
-, dependencies = [ "console", "effect", "psci-support" ]
+, dependencies =
+    [ "arrays"
+    , "bigints"
+    , "console"
+    , "effect"
+    , "foldable-traversable"
+    , "psci-support"
+    ]
 , packages = ./packages.dhall
 , sources = [ "src/**/*.purs", "test/**/*.purs" ]
 }

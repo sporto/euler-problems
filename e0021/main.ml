@@ -1,16 +1,16 @@
 (* open Core *)
 open Printf
 
-let rec divisors_ (num: int) (next: int) (acc: int list) : int list =
+let rec divisors_ (num: int) (next: int) : int list =
 	if num = next then
-		acc
+		[]
 	else if num mod next = 0 then
-		divisors_ num (next + 1) (next :: acc)
+		next :: divisors_ num (next + 1)
 	else
-		divisors_ num (next + 1) acc
+		divisors_ num (next + 1)
 
 let divisors_of n =
-	divisors_ n 1 []
+	divisors_ n 1
 
 let res =
 	divisors_of 20

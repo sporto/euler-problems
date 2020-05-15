@@ -1,0 +1,2 @@
+test:
+	cd non_abundant_sums && rebar3 eunit

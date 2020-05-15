@@ -32,3 +32,24 @@ pub fn sum_of_divisors(n: Int) -> Int {
 pub fn is_perfect(n: Int) -> Bool {
   sum_of_divisors(n) == n
 }
+
+pub type Kind {
+  Deficient
+  Perfect
+  Abundant
+}
+
+pub fn kind(n: Int) -> Kind {
+  let sum = sum_of_divisors(n)
+  case sum == n {
+    True ->
+      Perfect
+    False ->
+    case sum > n {
+      True ->
+        Abundant
+      False ->
+        Deficient
+    }
+  }
+}

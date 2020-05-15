@@ -29,3 +29,11 @@ pub fn is_perfect_test() {
   non_abundant_sums.is_perfect(28)
   |> should.equal(True)
 }
+
+pub fn kind_test() {
+  non_abundant_sums.kind(12)
+  |> should.equal(non_abundant_sums.Abundant)
+
+  non_abundant_sums.kind(28)
+  |> should.equal(non_abundant_sums.Perfect)
+}
